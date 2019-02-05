@@ -10,6 +10,7 @@ namespace AIMoveBoard2
     {
         public List<Node> open = new List<Node>();
         List<Node> closed = new List<Node>();
+        List<Node> grid = new List<Node>();
         Node start = new Node(0, 0);
         public Node end = new Node(9,9);
 
@@ -41,6 +42,21 @@ namespace AIMoveBoard2
             closed.Add(new Node(8, 7));
             closed.Add(new Node(8, 8));
             closed.Add(new Node(8, 9));
+
+            for(int i=0;i<10;i++)
+            {
+                for(int n=0;n<10;n++)
+                {
+                    if (i != 0 && n != 0)
+                    {
+                        foreach (Node nd in closed)
+                        {
+                            if (i != nd.xCoord && n != nd.yCoord)
+                                open.Add(new Node(i, n));
+                        }
+                    }
+                }
+            }
         }
 
 
@@ -99,71 +115,68 @@ namespace AIMoveBoard2
         public List<Node> FindAdjacent(Node n)
         {
             List<Node> temp = new List<Node>();
-            //left
-            if (n.yCoord - 1 > 0 && n.yCoord - 1 < 9)
+            foreach (Node nd in open)
             {
-                Node tempN = new Node(n.xCoord, n.yCoord - 1);
-                tempN.parent = n;
-                CalculateValues(tempN);
-                temp.Add(tempN);
+                //left
+                if (n.yCoord - 1 == nd.yCoord)
+                {
+                    nd.parent = n;
+                    CalculateValues(nd);
+                    temp.Add(nd);
+                }
+                //right
+                if (n.yCoord + 1 == nd.yCoord)
+                {
+                    nd.parent = n;
+                    CalculateValues(nd);
+                    temp.Add(nd);
+                }
+                //up
+                if (n.xCoord - 1 == nd.xCoord)
+                {
+                    nd.parent = n;
+                    CalculateValues(nd);
+                    temp.Add(nd);
+                }
+                //down
+                if (n.xCoord + 1 == nd.xCoord)
+                {
+                    nd.parent = n;
+                    CalculateValues(nd);
+                    temp.Add(nd);
+                }
+                //left-up
+                if (n.xCoord - 1 == nd.xCoord && n.yCoord - 1 == nd.yCoord)
+                {
+                    nd.parent = n;
+                    CalculateValues(nd);
+                    temp.Add(nd);
+                }
+                //left-down
+                if (n.xCoord - 1 > 0 && n.xCoord - 1 < 9 && n.yCoord + 1 > 0 && n.yCoord + 1 < 9)
+                {
+                    Node tempN = new Node(n.xCoord - 1, n.yCoord + 1);
+                    tempN.parent = n;
+                    CalculateValues(tempN);
+                    temp.Add(tempN);
+                }
+                //right up
+                if (n.xCoord + 1 > 0 && n.xCoord + 1 < 9 && n.yCoord - 1 > 0 && n.yCoord - 1 < 9)
+                {
+                    Node tempN = new Node(n.xCoord + 1, n.yCoord - 1);
+                    tempN.parent = n;
+                    CalculateValues(tempN);
+                    temp.Add(tempN);
+                }
+                //right down
+                if (n.xCoord + 1 > 0 && n.xCoord + 1 < 9 && n.yCoord + 1 > 0 && n.yCoord + 1 < 9)
+                {
+                    Node tempN = new Node(n.xCoord + 1, n.yCoord + 1);
+                    tempN.parent = n;
+                    CalculateValues(tempN);
+                    temp.Add(tempN);
+                }
             }
-            //right
-            if (n.yCoord + 1 > 0 && n.yCoord + 1 < 9)
-            {
-                Node tempN = new Node(n.xCoord, n.yCoord + 1);
-                tempN.parent = n;
-                CalculateValues(tempN);
-                temp.Add(tempN);
-            }
-            //up
-            if (n.xCoord - 1 > 0 && n.xCoord - 1 < 9)
-            {
-                Node tempN = new Node(n.xCoord - 1, n.yCoord);
-                tempN.parent = n;
-                CalculateValues(tempN);
-                temp.Add(tempN);
-            }
-            //down
-            if (n.xCoord + 1 > 0 && n.xCoord + 1 < 9)
-            {
-                Node tempN = new Node(n.xCoord + 1, n.yCoord);
-                tempN.parent = n;
-                CalculateValues(tempN);
-                temp.Add(tempN);
-            }
-            //left-up
-            if (n.xCoord - 1 > 0 && n.xCoord - 1 < 9 && n.yCoord - 1 > 0 && n.yCoord - 1 < 9)
-            {
-                Node tempN = new Node(n.xCoord - 1, n.yCoord-1);
-                tempN.parent = n;
-                CalculateValues(tempN);
-                temp.Add(tempN);
-            }
-            //left-down
-            if (n.xCoord - 1 > 0 && n.xCoord - 1 < 9 && n.yCoord + 1 > 0 && n.yCoord + 1 < 9)
-            {
-                Node tempN = new Node(n.xCoord - 1, n.yCoord+1);
-                tempN.parent = n;
-                CalculateValues(tempN);
-                temp.Add(tempN);
-            }
-            //right up
-            if (n.xCoord + 1 > 0 && n.xCoord + 1 < 9 && n.yCoord - 1 > 0 && n.yCoord - 1 < 9)
-            {
-                Node tempN = new Node(n.xCoord + 1, n.yCoord-1);
-                tempN.parent = n;
-                CalculateValues(tempN);
-                temp.Add(tempN);
-            }
-            //right down
-            if (n.xCoord + 1 > 0 && n.xCoord + 1 < 9 && n.yCoord + 1 > 0 && n.yCoord + 1 < 9)
-            {
-                Node tempN = new Node(n.xCoord + 1, n.yCoord+1);
-                tempN.parent = n;
-                CalculateValues(tempN);
-                temp.Add(tempN);
-            }
-
             //return list
             return temp;
         }
@@ -171,8 +184,8 @@ namespace AIMoveBoard2
         //calculate distance values
         public void CalculateValues(Node n)
         {
-            n.gValue = Math.Abs(n.xCoord - start.xCoord) + Math.Abs(n.yCoord - start.yCoord);
-            n.hValue = Math.Abs(n.xCoord - end.xCoord) + Math.Abs(n.yCoord - end.yCoord);
+            n.gValue = Math.Abs(start.xCoord - n.xCoord) *10 + Math.Abs(start.yCoord - n.yCoord);
+            n.hValue = Math.Abs(end.xCoord - n.xCoord) *10 + Math.Abs(end.yCoord-n.yCoord );
             n.fValue = n.gValue + n.hValue;
         }
     }
