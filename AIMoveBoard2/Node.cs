@@ -16,10 +16,13 @@ namespace AIMoveBoard2
 
         public Node parent { get; set; }
 
-        public Node(int x, int y)
+        public bool blockade;
+
+        public Node(int x, int y, bool wall)
         {
             xCoord = x;
             yCoord = y;
+            blockade = wall;
         }
     }
 }
