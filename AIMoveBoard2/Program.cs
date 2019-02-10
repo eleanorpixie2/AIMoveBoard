@@ -11,8 +11,12 @@ namespace AIMoveBoard2
         static void Main(string[] args)
         {
             Agent a = new Agent();
-
-                Console.WriteLine("{0},{1}", a.open[0].xCoord, a.open[0].yCoord);
+            a.MoveAgent();
+            foreach(Node n in a.path)
+            {
+                Console.WriteLine("{0},{1}", n.xCoord, n.yCoord);
+                Console.WriteLine("G-{0},H-{1},F-{2}\n", n.gValue, n.hValue,n.fValue);
+            }
             Console.ReadLine();
         }
     }
