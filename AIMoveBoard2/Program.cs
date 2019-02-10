@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+//help from https://github.com/davecusatis/A-Star-Sharp/blob/master/Astar.cs
 namespace AIMoveBoard2
 {
     class Program
